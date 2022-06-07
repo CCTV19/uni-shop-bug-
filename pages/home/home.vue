@@ -1,5 +1,10 @@
 <template>
 	<view>
+		
+		<view class="search-box">
+			<my-search @click="gotoSearch"></my-search>
+		</view>
+		
 		<swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000" circular="true">
 			<swiper-item v-for="(item,i) in swiperList" :key="i">
 				<navigator class="swiper-item" :url="'/subpkg/goods_detail/goods_detail?goods_id='+item.goods_id">
@@ -75,6 +80,11 @@
 						url:'/pages/cate/cate'
 					})
 				}
+			},
+			gotoSearch(){
+				uni.navigateTo({
+					url:'/subpkg/search/search'
+				})
 			}
 		}
 	}
@@ -111,5 +121,10 @@
 	.floor-img-box{
 		display: flex;
 		padding-left: 10rpx;
+	}
+	.search-box{
+		position: sticky;
+		top:0;
+		z-index: 999;
 	}
 </style>
