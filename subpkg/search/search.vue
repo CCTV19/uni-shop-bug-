@@ -34,7 +34,8 @@
 				timer:null,
 				kw:"",
 				searchResults:[],
-				historyList:[]
+				historyList:[],
+				
 			};
 		},
 		onLoad() {
