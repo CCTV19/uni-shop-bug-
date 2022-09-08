@@ -1,4 +1,5 @@
 <template>
+	<!--购物车页面底部结算组件-->
 	<view class="my-settle-container">
 		<label class="radio" @click="changeAllState">
 			<radio color="#C00000" :checked="isFullCheck" /><text>全选</text>
@@ -20,24 +21,25 @@
 		data() {
 			return {
 				seconds:3,
-				
 				timer:null
 			};
 		},
 		methods:{
 			...mapMutations('m_cart',['updateAllGoodsState']),
 			...mapMutations('m_user',['updateRedirectInfo']),
-			
+			//全选/全不选功能，同时也影响了isFullCheck，间接控制radio勾选
 			changeAllState(){
 				this.updateAllGoodsState(!this.isFullCheck)
 			},
+			//结算按钮：判断是否选中商品/是否已选择收货地址
 			settlement(){
 				if(!this.checkedCount) return uni.$showMsg('请选择要结算的商品')
 				
 				if(!this.addstr) return uni.$showMsg('请选择收货地址')
-				
+				//如果没有token(未登录)执行delayNavigate
 				if(!this.token) return this.delayNavigate()
 			},
+			//延迟后跳转到登录页面
 			delayNavigate(){
 				this.seconds = 3
 				
@@ -52,8 +54,10 @@
 						uni.switchTab({
 							url:'/pages/my/my',
 							success:()=>{
+								//将跳转信息存储到vuex中
 								this.updateRedirectInfo({
 									openType:'switchTab',
+									//从哪个页面跳转的
 									from:'/pages/cart/cart'
 								})
 							}
@@ -64,6 +68,7 @@
 					this.showTips(this.seconds)
 				},1000)
 			},
+			//展示提示信息
 			showTips(n){
 				uni.showToast({
 					icon:'none',
@@ -74,10 +79,13 @@
 			}
 		},
 		computed:{
+			//从cart和user的vuex中映射对应数据
 			...mapGetters('m_cart',['checkedCount','total','checkedGoodsAmount']),
 			...mapGetters('m_user',['addstr']),
 			...mapState('m_user',['token']),
+			//判断是否全选，由此函数控制radio勾选与否
 			isFullCheck(){
+				//根据总数判定是否全选，返回true/false
 				return this.total === this.checkedCount
 			}
 		}

@@ -1,4 +1,5 @@
 <template>
+	<!--my-searc展示搜索组件，用于首页和分类页面顶部，真正具有搜索功能的组件是分包里的search组件-->
 	<view class="my-search-container" 
 	:style="{ 'background-color':bgcolor}"
 	@click="searchBoxHandler">
@@ -12,6 +13,7 @@
 <script>
 	export default {
 		props:{
+			//页面样式等待外界传入，无传入则用默认数值
 			bgcolor:{
 				type:String,
 				default:'#C00000'
@@ -28,6 +30,7 @@
 			};
 		},
 		methods:{
+			//相应父组件（home）的click事件
 			searchBoxHandler(){
 				this.$emit('click')
 			}

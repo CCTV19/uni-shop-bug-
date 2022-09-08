@@ -1,11 +1,13 @@
 <template>
 	<view>
+		<!--如果从vuex中映射的address为空则显示这个-->
 		<view class="address-choose-box" v-if="JSON.stringify(address) === '{}'">
 			<button type="primary" size="mini" 
 			class="btnChooseAddress"
 			@click="chooseAddress">请选择收货地址+</button>
 		</view>
 		
+		<!--如果从vuex中映射的address不为空则显示-->
 		<view class="address-info-box" v-else @click="chooseAddress">
 			<view class="row1">
 				<view class="row1-left">
@@ -36,16 +38,20 @@
 			};
 		},
 		methods:{
-			...mapMutations('m_user',['updateAddress']),//将vuex的user.js中的存入state的方法拿过来
+			//使用辅助函数触发Mutation操作
+			...mapMutations('m_user',['updateAddress']),
 			async chooseAddress(){
+				//调用uni提供的选择地址api
 				const [err,succ] = await uni.chooseAddress().catch(err => err)
 				if(err === null && succ.errMsg === 'chooseAddress:ok'){
 					/* this.address = succ */
-					this.updateAddress(succ)//存到store中
+					//将存到store中
+					this.updateAddress(succ)
 				}
 			}
 		},
 		computed:{
+			//将当前组件需要的全局数据，映射为当前组件computed属性
 			...mapState('m_user',['address']),
 			...mapGetters('m_user',['addstr'])
 		}

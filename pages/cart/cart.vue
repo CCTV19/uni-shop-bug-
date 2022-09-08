@@ -1,4 +1,5 @@
 <template>
+	<!--通过判断cart.length的值选择展示哪个组件-->
 	<view class="cart-container" v-if="cart.length !== 0">
 		<my-address></my-address>
 		
@@ -41,6 +42,7 @@
 		},
 		data() {
 			return {
+				//为右滑删除选项做准备
 				options:[{
 					text:"删除",
 					style:{
@@ -51,14 +53,15 @@
 		},
 		methods:{
 			...mapMutations('m_cart',['updateGoodsState','updateGoodsCount','removeGoodsById']),
-			
+			//勾选改变vuex中state的状态
 			radioChangeHandler(e){
 				this.updateGoodsState(e)
 			},
-			//自定义事件 等数据传过来
+			//改变vuex中goodscount的值
 			numberChangeHandler(e){
 				this.updateGoodsCount(e)
 			},
+			//从vuex中根据goods_id删除对应的商品
 			swipeItemClickHandler(goods){
 				console.log(goods)
 				this.removeGoodsById(goods.goods_id)

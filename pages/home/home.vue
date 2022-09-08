@@ -49,18 +49,21 @@
 	export default {
 		mixins:[badgeMix],
 		data() {
+			//准备三个用来接收数据的数组
 			return {
 				swiperList:[],
 				navList:[],
 				floorList:[]
 			};
 		},
+		//页面一加载就发送请求获取数据（获取轮播图的请求应该在onLoad中进行）
 		onLoad() {
 			this.getSwiperList()
 			this.getNavList()
 			this.getFloorList()
 		},
 		methods:{
+			//对接口请求图片等数据
 			async getSwiperList(){
 				const { data : res } = await uni.$http.get('/api/public/v1/home/swiperdata')
 				console.log(res)
@@ -84,6 +87,7 @@
 				})
 				this.floorList = res.message
 			},
+			//点击分类会导航到cate页面
 			navClickHandler(item){
 				if(item.name === '分类'){
 					uni.switchTab({
@@ -91,6 +95,7 @@
 					})
 				}
 			},
+			//跳转到搜索页面
 			gotoSearch(){
 				uni.navigateTo({
 					url:'/subpkg/search/search'

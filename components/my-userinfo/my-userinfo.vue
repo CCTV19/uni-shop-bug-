@@ -1,7 +1,9 @@
 <template>
 	<view class="my-userinfo-container">
 		<view class="top-box">
+			<!--头像-->
 			<image :src="userinfo.avatarUrl" class="avatar"></image>
+			<!--昵称-->
 			<view class="nickname">{{userinfo.nickName}}</view>
 		</view>
 		
@@ -83,12 +85,13 @@
 		},
 		methods:{
 			...mapMutations('m_user',['updateAddress','updateUserInfo','updateToken']),
+			//退出账号功能
 			async logout(){
 				const [err,succ] = await uni.showModal({
 					title:'提示',
 					content:'确认退出登录吗？'
 				}).catch(err => err)
-				
+				//如果确认退出时，将vuex users中的updateAddress,updateUserInfo,updateToken全部置空
 				if(succ && succ.confirm){
 					this.updateAddress({})
 					this.updateUserInfo({})

@@ -1,4 +1,5 @@
 <template>
+	<!--通过vuex中的token来判断展示哪个组件 my-login/my-userinfo-->
 	<view class="my-container">
 		<my-login v-if="!token"></my-login>
 		

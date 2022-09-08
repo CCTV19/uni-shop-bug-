@@ -31,18 +31,25 @@
 	export default {
 		data() {
 			return {
+				//定时器
 				timer:null,
+				//搜索关键词
 				kw:"",
+				//搜索结果
 				searchResults:[],
+				//历史记录列表
 				historyList:[],
 				
 			};
 		},
 		onLoad() {
-			this.historyList = JSON.stringify(uni.getStorageSync('kw') || '[]' ) 
+			//从本地存储中取出
+			this.historyList = JSON.parse(uni.getStorageSync('kw') || '[]' ) 
 		},
 		methods:{
+			//一输入关键词则执行此方法
 			input(e){
+				//防抖 连续触发这个事件 只会等到最后一次触发后的500ms之后才执行
 				clearTimeout(this.timer)
 				this.timer = setTimeout(()=>{
 					this.kw = e
@@ -50,7 +57,8 @@
 				},500)
 			},
 			async getSearchList(){
-				if(this.kw.length === 0){
+				//判断输入是否为空 用于删除关键词后回到初始页面
+				if(this.kw.length=== 0){
 					this.searchResults = []
 					return
 				}
@@ -61,23 +69,31 @@
 				
 				this.saveSearchHistory()
 			},
+			//点击对应商品跳转到商品详情页面
 			gotoDetail(item){
 				uni.navigateTo({
 					url:'/subpkg/goods_detail/goods_detail?goods_id='+ item.goods_id
 				})
 			},
+			//保存历史搜索关键词
 			saveSearchHistory(){
-				this.historyList.push(this.kw)
+				//this.historyList.push(this.kw)
+				//Set 对象允许你存储任何类型的唯一值，无论是原始值或者是对象引用
 				const set = new Set(this.historyList)
+				//先删除原有的值再追加新值 达到新添加的在最后的目的
 				set.delete(this.kw)
 				set.add(this.kw)
+				//from() 方法用于通过拥有 length 属性的对象或可迭代的对象来返回一个数组 将对象转数组
 				this.historyList = Array.from(set)
+				//写入本地存储
 				uni.setStorageSync('kw',JSON.stringify(this.historyList))
 			},
+			//清除历史记录
 			clean(){
 				this.historyList = []
 				uni.setStorageSync('kw','[]')
 			},
+			//点击对应历史记录关键词跳转到商品列表页面
 			gotoGoodsList(kw){
 				uni.navigateTo({
 					url:'/subpkg/goods_list/goods_list?query=' + kw
@@ -85,6 +101,7 @@
 			}
 		},
 		computed:{
+			//因为是通过push方法在数组末尾添加，所以展示是需要反转数组进行展示
 			histories(){
 				return [...this.historyList].reverse()
 			}
