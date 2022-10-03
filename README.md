@@ -18,9 +18,9 @@
 ![1664784680106](https://user-images.githubusercontent.com/101321825/193540408-31e3e7cb-fc47-4a3d-9283-3947fae13c95.png)<br><br>
 #项目购物车页面展示<br>
 1.头部调用选择地址api<br>
-2.商品展示栏有左滑删除 勾选结算价格功能<br>
+2.商品展示栏有左滑删除 勾选结算价格功能<br><br>
 ![1664789230544](https://user-images.githubusercontent.com/101321825/193544537-1ec56319-de88-48ee-b857-6386f1c57656.png)<br><br>
 #项目个人信息页面展示<br>
-分为未登录/登录后的页面 通过调用用户登录api<br>
-![1664784598425](https://user-images.githubusercontent.com/101321825/193545128-50be417e-4ddd-4967-9742-56f9863fa28e.png)<br>
+分为未登录/登录后的页面 通过调用用户登录api<br><br>
+![1664784598425](https://user-images.githubusercontent.com/101321825/193545128-50be417e-4ddd-4967-9742-56f9863fa28e.png)
 ![1664784707544](https://user-images.githubusercontent.com/101321825/193545143-3aec6bef-23c7-427a-9964-16e93bc3d79b.png)<br>
